@@ -1,20 +1,20 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*									      */
+/*							  :::	   ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: wkuay <wkuay@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/03 21:02:53 by wkuay             #+#    #+#             */
-/*   Updated: 2026/10/03 21:02:54 by wkuay            ###   ########.fr       */
-/*                                                                            */
+/*						      +:+ +:+	      +:+     */
+/*   By: wkuay <wkuay@student.42.fr>		    +#+  +:+	   +#+	      */
+/*						  +#+#+#+#+#+	+#+	      */
+/*   Created: 2026/10/03 21:02:53 by wkuay	       #+#    #+#	      */
+/*   Updated: 2026/10/10 17:03:21 by wkuay            ###   ########.fr       */
+/*									      */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd)
 {
-    if (s == NULL)
-        return ;
-    write(fd, s, ft_strlen(s));
+	if (s == NULL)
+		return ;
+	write(fd, s, ft_strlen(s));
 }
