@@ -1,28 +1,28 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*									      */
+/*							  :::	   ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: wkuay <wkuay@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/04 19:17:59 by wkuay             #+#    #+#             */
-/*   Updated: 2026/10/04 19:56:47 by wkuay            ###   ########.fr       */
-/*                                                                            */
+/*						      +:+ +:+	      +:+     */
+/*   By: wkuay <wkuay@student.42.fr>		    +#+  +:+	   +#+	      */
+/*						  +#+#+#+#+#+	+#+	      */
+/*   Created: 2026/10/04 19:17:59 by wkuay	       #+#    #+#	      */
+/*   Updated: 2026/10/10 15:52:35 by wkuay            ###   ########.fr       */
+/*									      */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void    ft_lstadd_back(t_list ** lst, t_list *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-    t_list  *last;
+	t_list	*last;
 
-    if (lst == NULL || new == NULL)
-        return ;
-    if (*lst == NULL)
-    {
-        *lst = new;
-        return ;
-    }
-    last = ft_lstlast(*lst);
-    last->next = new;
+	if (lst == NULL || new == NULL)
+		return ;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = ft_lstlast(*lst);
+	last->next = new;
 }
