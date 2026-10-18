@@ -6,12 +6,11 @@
 /*   By: wkuay <wkuay@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/11 21:19:55 by wkuay             #+#    #+#             */
-/*   Updated: 2026/10/18 17:12:25 by wkuay            ###   ########.fr       */
+/*   Updated: 2026/10/18 20:17:47 by wkuay            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*read_and_store(int fd, char *saved_str)
 {
@@ -32,6 +31,8 @@ char	*read_and_store(int fd, char *saved_str)
 		{
 			new_str[bytes_read] = '\0';
 			temp = ft_strjoin(saved_str, new_str);
+			if (temp == NULL)
+				return (free(new_str), free(saved_str), NULL);
 			free(saved_str);
 			saved_str = temp;
 		}
@@ -100,20 +101,23 @@ char	*get_next_line(int fd)
 {
 	static char	*saved_str;
 	char		*str;
+	char		*temp;
 	size_t		i;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	saved_str = read_and_store(fd, saved_str);
 	if (saved_str == NULL || saved_str[0] == '\0')
-	{
-		free(saved_str);
-		saved_str = NULL;
-		return (NULL);
-	}
+		return (free(saved_str), saved_str = NULL, NULL);
 	i = line_separator(saved_str, '\n');
 	str = ft_substr(saved_str, 0, i);
-	saved_str = ft_substr(saved_str, i, ft_strlen(saved_str) - i);
+	if (str == NULL)
+		return (free(saved_str), saved_str = NULL, NULL);
+	temp = ft_substr(saved_str, i, ft_strlen(saved_str) - i);
+	if (temp == NULL)
+		return (free(saved_str), saved_str = NULL, NULL);
+	free(saved_str);
+	saved_str = temp;
 	if (saved_str != NULL && saved_str[0] == '\0')
 	{
 		free(saved_str);
