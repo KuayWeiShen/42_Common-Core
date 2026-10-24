@@ -20,19 +20,19 @@ char	*read_and_store(int fd, char *saved_str)
 
 	new_str = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (new_str == NULL)
-		return (NULL);
+		return (free_str(&saved_str));
 	bytes_read = 1;
 	while (ft_strchr(saved_str, '\n') == NULL && bytes_read > 0)
 	{
 		bytes_read = read(fd, new_str, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free(new_str), free(saved_str), NULL);
+			return (free(new_str), free_str(&saved_str));
 		if (bytes_read > 0)
 		{
 			new_str[bytes_read] = '\0';
 			temp = ft_strjoin(saved_str, new_str);
 			if (temp == NULL)
-				return (free(new_str), free(saved_str), NULL);
+				return (free(new_str), free_str(&saved_str));
 			free(saved_str);
 			saved_str = temp;
 		}
@@ -81,20 +81,11 @@ size_t	line_separator(char *saved_str, int c)
 	return (len);
 }
 
-char	*update_str(char *saved_str)
+char	*free_str(char **str)
 {
-	size_t	i;
-	char	*updated_str;
-
-	i = line_separator(saved_str, '\n');
-	if (saved_str[i] == '\0')
-	{
-		free(saved_str);
-		return (NULL);
-	}
-	updated_str = ft_substr(saved_str, i + 1, ft_strlen(saved_str) - (i + 1));
-	free(saved_str);
-	return (updated_str);
+	free(*str);
+	*str = NULL;
+	return (NULL);
 }
 
 char	*get_next_line(int fd)
@@ -108,20 +99,17 @@ char	*get_next_line(int fd)
 		return (NULL);
 	saved_str = read_and_store(fd, saved_str);
 	if (saved_str == NULL || saved_str[0] == '\0')
-		return (free(saved_str), saved_str = NULL, NULL);
+		return (free_str(&saved_str));
 	i = line_separator(saved_str, '\n');
 	str = ft_substr(saved_str, 0, i);
 	if (str == NULL)
-		return (free(saved_str), saved_str = NULL, NULL);
+		return (free_str(&saved_str));
 	temp = ft_substr(saved_str, i, ft_strlen(saved_str) - i);
 	if (temp == NULL)
-		return (free(saved_str), saved_str = NULL, NULL);
+		return (free(str), free_str(&saved_str));
 	free(saved_str);
 	saved_str = temp;
 	if (saved_str != NULL && saved_str[0] == '\0')
-	{
-		free(saved_str);
-		saved_str = NULL;
-	}
+		free_str(&saved_str);
 	return (str);
 }
